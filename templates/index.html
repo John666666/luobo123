@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>新物种科技网址导航</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <style type="text/css">
+        html,body,header,div,h1,h2,h3,p,ul,li {
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0088cc;
+            color: white;
+            padding: 10px 0px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        header h2 {
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        header h2+div {
+            position: absolute;
+            right: 20px;
+            bottom: 2px;
+            font-weight: bold;
+        }
+        .tool-container .tool-title {
+            padding-bottom: 10px;
+            border-bottom: 1px solid silver;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .tool-container .tool-title span{
+            margin-right: 20px;
+        }
+        .tool-group {
+            list-style: none;
+        }
+
+        .tool-group li{
+            list-style: none;
+            border-left: 3px solid lightgreen;
+        }
+        .tool-group li span{
+            margin-right: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        jQuery(function(){
+            var time_bar = jQuery("#time_bar");
+            function showTime() {
+                var date = new Date();
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var day = date.getDate();
+                var hour = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+                time_bar.text(year+"年"+month+"月"+day+"日"+hour+"点"+minutes+"分"+seconds+"秒");
+            }
+            setInterval(showTime, 1000);
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h2>新物种科技网址导航</h2>
+        <div>
+            <span id="time_bar"></span>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="tool-container">
+            <h3 class="tool-title">
+                <span class="glyphicon glyphicon-bookmark"></span>
+                萝小逗相关
+            </h3>
+            <ul class="tool-group">
+                <li class="col-md-1">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <a href="luobo123/unbind">解绑</a>
+                </li>
+                <li class="col-md-1">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <a href="luobo123/log">日志查询</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>萝小逗-交互日志查询</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <style type="text/css">
+        html,body,header,div,h1,h2,h3,p,ul,li {
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0088cc;
+            color: white;
+            padding: 10px 0px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        header h2 {
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>萝小逗交互日志查询</h2>
+    </header>
+    <div class="container">
+        <form class="form-inline">
+          <div class="form-group">
+            <label for="imei">机器人ID号: </label>
+            <input type="text" class="form-control" size="50" id="imei" placeholder="要查询日志的机器人ID号">
+          </div>
+          <input id="btn_query" type="button" class="btn btn-default" value="查询">
+        </form>
+        <table id="data_table" class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>请求时间</th>
+                    <th>响应时间</th>
+                    <th>用户输入</th>
+                    <th>云端响应</th>
+                    <th>领域</th>
+                    <th>意图</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="alert alert-info" role="alert">注意: 只能查询最近50条交互日志!</div>
+    </div>
+</body>
+<script type="text/javascript">
+    var imei_input = jQuery("#imei");
+    var data_table = jQuery("#data_table");
+
+    jQuery("#btn_query").click(function(){
+        var imei = imei_input.val();
+        if(!imei) {
+            alert("必须输入要查询的机器人ID号");
+            return;
+        }
+        jQuery.post("log/search", {imei: imei}, function(result) {
+            if (!result){
+                alert("请求出错");
+                return;
+            }
+            if (result.code != 200) {
+                alert("查询失败, 原因: "+result.msg);
+            } else {
+                var row_set = jQuery.parseJSON(result.data);
+                for (var i in row_set) {
+                    var req_time = row_set[i].req_time;
+                    var resp_time = row_set[i].resp_time;
+                    var req_content = row_set[i].req_content;
+                    var domain = row_set[i].domain;
+                    var intent = row_set[i].intent;
+                    var params = row_set[i].params;
+                    data_table.find("tbody").append("<tr><td>"+req_time+"</td><td>"+resp_time+"</td><td>"+req_content+"</td>" +
+                            "<td>"+params+"</td>" + "<td>"+domain+"</td><td>"+intent+"</td></tr>");
+                }
+            }
+        }, "json");
+    });
+</script>
+</html>

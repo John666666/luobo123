@@ -1,0 +1,1 @@
+nohup python app.py 6688 > nohup.out 2>&1 &
